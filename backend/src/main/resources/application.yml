@@ -1,0 +1,67 @@
+# =============================================================================
+# FAST/FACTS Sales Approval Portal — Application Configuration
+# Ref: BRD CHUNK-8 (Environment, Endpoints & Seed Data)
+# =============================================================================
+
+spring:
+  application:
+    name: fast-facts-sales-portal
+
+  # ---------------------------------------------------------------------------
+  # PostgreSQL DataSource (BRD: Port 5432, DB name: "forms")
+  # ---------------------------------------------------------------------------
+  datasource:
+    url: jdbc:postgresql://localhost:5432/forms
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  # ---------------------------------------------------------------------------
+  # JPA / Hibernate Configuration
+  # ---------------------------------------------------------------------------
+  jpa:
+    hibernate:
+      ddl-auto: update          # Auto-create/update schema from entities
+    show-sql: true              # Log SQL for development debugging
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  # ---------------------------------------------------------------------------
+  # File Upload Limits (PO/Email & MSA/SLA attachments — max 5 files each)
+  # ---------------------------------------------------------------------------
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
+
+# =============================================================================
+# Server Configuration (BRD: Backend on port 8080)
+# =============================================================================
+server:
+  port: 8080
+
+# =============================================================================
+# SpringDoc / Swagger UI (BRD: Available at /swagger-ui.html)
+# =============================================================================
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+# =============================================================================
+# JWT Configuration
+# Override 'jwt.secret' via environment variable in production.
+# =============================================================================
+jwt:
+  secret: FastFactsSalesPortal2026SecureJWTSigningKeyMustBeAtLeast256Bits!!
+  expiration: 86400000    # 24 hours in milliseconds
+
+# =============================================================================
+# File Upload Storage Path
+# =============================================================================
+file:
+  upload-dir: ./uploads
